@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import CsvDownloader from 'react-csv-downloader';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
@@ -105,6 +105,38 @@ const SupplierList = () => {
     <div className='content'>
       <div className='info text-center' style={{ color: 'red' }}>
         {status}
+      </div>
+      <div
+        style={{
+          textAlign: 'right',
+          alignSelf: 'right',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginTop: '-20px',
+        }}
+      >
+        {' '}
+        <div
+          style={{
+            backgroundColor: 'grey',
+            width: '140px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 10,
+            marginRight: '18px',
+          }}
+        >
+          <CsvDownloader
+            filename='Supplier'
+            separator=','
+            wrapColumnChar="'"
+            datas={suppliers}
+          >
+            <h5 style={{ marginTop: 15 }}>Download CSV</h5>
+          </CsvDownloader>
+        </div>
       </div>
 
       <Grid fluid>
