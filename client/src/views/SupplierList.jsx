@@ -115,7 +115,6 @@ const SupplierList = () => {
           marginTop: '-20px',
         }}
       >
-        {' '}
         <div
           style={{
             backgroundColor: 'grey',
