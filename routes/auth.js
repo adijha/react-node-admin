@@ -666,7 +666,11 @@ router.delete('/supplierDel/:id', async (req, res) => {
   console.log(req.params.id);
   try {
     const data = await User.deleteOne({ _id: req.params.id });
-    res.json('success');
+    if (data) {
+      res.json('success');
+    } else {
+      res.json({ message: 'There is some problem with server' });
+    }
   } catch (e) {
     res.json({ message: error.message });
   }
