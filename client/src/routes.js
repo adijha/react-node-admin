@@ -1,17 +1,15 @@
-import CopyDashboard from "./views/CopyDashboard.jsx";
-import SupplierList from "./views/SupplierList.jsx";
-import Supplier from "./views/Supplier.jsx";
-import AdminProduct from "./views/AdminProduct.jsx"
-import Category from "./views/Category.jsx"
-import Margin from "./views/Margin.jsx"
-import AutoMargin from "./views/AutoMargin.jsx"
-import MerchantDetail from "./views/MerchantDetail.jsx"
-import MerchantAccountDetail from "./views/MerchantAccountDetail.jsx"
-import SingleProductDetail from "./views/SingleProductDetail.jsx"
-import AdminProfile from "./views/AdminProfile.jsx"
-import AdminOrderDetails from './views/AdminOrderDetails'
-
-
+import CopyDashboard from './views/CopyDashboard.jsx';
+import SupplierList from './views/SupplierList.jsx';
+import Supplier from './views/Supplier.jsx';
+import AdminProduct from './views/AdminProduct.jsx';
+import Category from './views/Category.jsx';
+import Margin from './views/Margin.jsx';
+import AutoMargin from './views/AutoMargin.jsx';
+import MerchantDetail from './views/MerchantDetail.jsx';
+import MerchantAccountDetail from './views/MerchantAccountDetail.jsx';
+import SingleProductDetail from './views/SingleProductDetail.jsx';
+import AdminProfile from './views/AdminProfile.jsx';
+import AdminOrderDetails from './views/AdminOrderDetails';
 
 const dashboardRoutes = [
   {
@@ -75,6 +73,13 @@ const dashboardRoutes = [
     layout: '/admin',
   },
   {
+    path: '/orders',
+    name: 'Order Details',
+    icon: 'pe-7s-user',
+    component: AdminOrderDetails,
+    layout: '/admin',
+  },
+  {
     path: '/merchant/:id',
     component: MerchantAccountDetail,
     layout: '/admin',
@@ -84,13 +89,6 @@ const dashboardRoutes = [
     component: SingleProductDetail,
     layout: '/admin',
   },
-  {
-    path: '/orders',
-    name: 'Order Details',
-    icon: 'pe-7s-user',
-    component: AdminOrderDetails,
-    layout: '/admin',
-  }
 ];
 
 export default dashboardRoutes;

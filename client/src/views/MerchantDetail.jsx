@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
-import { CSVLink, CSVDownload } from 'react-csv';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { NotificationManager } from 'react-notifications';
@@ -27,33 +26,6 @@ const MerchantDetail = () => {
 
   return (
     <div className='content'>
-      <div
-        style={{
-          textAlign: 'right',
-          alignSelf: 'right',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          marginTop: '-20px',
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: 'grey',
-            width: '120px',
-            height: '40px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 10,
-            marginRight: '18px',
-            marginBottom: '10px',
-          }}
-        >
-          <CSVLink data={merchantList} style={{ color: '#fff' }}>
-            Download CSV
-          </CSVLink>
-        </div>
-      </div>
       <Grid fluid>
         <Row>
           <Col md={12}>

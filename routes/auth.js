@@ -114,22 +114,18 @@ router.post('/adminLogin', async (req, res) => {
   res.send(token);
 });
 
-
 //order Details section in admin
 
-router.get('/customOrderDetails', async (req, res)=>{
-
+router.get('/customOrderDetails', async (req, res) => {
   const orderData = await Orders.find();
 
-
-  let firstArr = []
-  let secondArr = []
-  let thirdArr = []
-  let doneArr = []
+  let firstArr = [];
+  let secondArr = [];
+  let thirdArr = [];
+  let doneArr = [];
 
   orderData.forEach((item, i) => {
     item.products.forEach((product, j) => {
-
       if (product.sku !== undefined) {
         firstArr.push({
           orderId: item.product_name,
@@ -137,19 +133,19 @@ router.get('/customOrderDetails', async (req, res)=>{
           total_price: item.price,
           quantity: product.quantity,
           store: product.store,
-          customer_name: item.customer.name,
-          order_date: item.created_on
-        })
-      }
 
+          customer_name: item.customer,
+          order_date: item.created_on,
+        });
+      }
     });
   });
 
-  const productsData = await Products.find()
+  const productsData = await Products.find();
 
   productsData.forEach((data, k) => {
     firstArr.forEach((arr, l) => {
-      if (data.code===arr.sku) {
+      if (data.code === arr.sku) {
         secondArr.push({
           orderId: arr.orderId,
           sku: arr.sku,
@@ -158,20 +154,20 @@ router.get('/customOrderDetails', async (req, res)=>{
           store: arr.store,
           customer_name: arr.customer_name,
           order_date: arr.order_date,
-
+          productImage: data.productImage,
           shipping: data.shippingCharge,
           product_price: data.price,
-          supplier_id: data.supplier_id
-        })
+          supplier_id: data.supplier_id,
+        });
       }
     });
   });
 
-  const supplierUser = await User.find()
+  const supplierUser = await User.find();
 
   secondArr.forEach((sArr, m) => {
     supplierUser.forEach((user, n) => {
-      if (sArr.supplier_id==user._id) {
+      if (sArr.supplier_id == user._id) {
         thirdArr.push({
           orderId: sArr.orderId,
           sku: sArr.sku,
@@ -183,45 +179,40 @@ router.get('/customOrderDetails', async (req, res)=>{
           shipping: sArr.shipping,
           product_price: sArr.product_price,
           supplier_id: sArr.supplier_id,
-          supplierName: user.supplier_id
-        })
+          supplierName: user.supplier_id,
+          productImage: sArr.productImage,
+        });
       }
     });
   });
 
+  const mUser = await MerchantUser.find();
 
-const mUser = await MerchantUser.find()
-
-thirdArr.forEach((tArr, o) => {
-  mUser.forEach((muser, p) => {
-    if (tArr.store===muser.store) {
-      doneArr.push({
-        orderId: tArr.orderId,
-        sku: tArr.sku,
-        total_price: tArr.total_price,
-        quantity: tArr.quantity,
-        store: tArr.store,
-        customer_name: tArr.customer_name,
-        order_date: tArr.order_date,
-        shipping: tArr.shipping,
-        product_price: tArr.product_price,
-        supplier_id: tArr.supplier_id,
-        supplierName: tArr.supplierName,
-        merchantName: muser.firstName
-      })
-    }
+  thirdArr.forEach((tArr, o) => {
+    mUser.forEach((muser, p) => {
+      if (tArr.store === muser.store) {
+        doneArr.push({
+          orderId: tArr.orderId,
+          sku: tArr.sku,
+          total_price: tArr.total_price,
+          quantity: tArr.quantity,
+          store: tArr.store,
+          customer: tArr.customer_name,
+          order_date: tArr.order_date,
+          shipping: tArr.shipping,
+          product_price: tArr.product_price,
+          supplier_id: tArr.supplier_id,
+          supplierName: tArr.supplierName,
+          productImage: tArr.productImage,
+          merchantName: muser.firstName,
+        });
+      }
+    });
   });
+  console.log('customMerchantDetail', doneArr);
 
+  res.send(doneArr);
 });
-
-
-res.send(doneArr)
-
-})
-
-
-
-
 
 //merchant sign up
 router.post('/merchant', async (req, res) => {
@@ -577,18 +568,14 @@ router.get('/merchantOrderDetail/:store', async (req, res) => {
           sku: test.sku,
           count: test.count,
           price: item.price,
-<<<<<<< HEAD
         };
         newArray.push(newObject);
-=======
-          store: req.params.store
-        }
-        newArray.push(newObject)
->>>>>>> 9440fafe7348d0af9a3426c0b416018f06e67e03
+
+        store: req.params.store;
       }
+      newArray.push(newObject);
     });
   });
-<<<<<<< HEAD
   //   let finalObj = [];
   //
   // productArr.forEach((item, i) => {
@@ -607,30 +594,27 @@ router.get('/merchantOrderDetail/:store', async (req, res) => {
   // });
 
   // console.log(finalObj, "final");
-=======
-//   let finalObj = [];
-//
-// productArr.forEach((item, i) => {
-//     newArray.forEach((arr, i) => {
-//       if (arr.sku===item.sku) {
-//         const finalObject = {
-//           name: item.name,
-//           sku: arr.sku,
-//           price: arr.price,
-//           count: arr.count
-//         }
-//         finalObj.push(finalObject)
-//       }
-//     });
-//
-// });
+  //   let finalObj = [];
+  //
+  // productArr.forEach((item, i) => {
+  //     newArray.forEach((arr, i) => {
+  //       if (arr.sku===item.sku) {
+  //         const finalObject = {
+  //           name: item.name,
+  //           sku: arr.sku,
+  //           price: arr.price,
+  //           count: arr.count
+  //         }
+  //         finalObj.push(finalObject)
+  //       }
+  //     });
+  //
+  // });
 
+  // console.log(finalObj, "final");
 
-// console.log(finalObj, "final");
-
-console.log("check data", newArray);
-  res.send(newArray)
->>>>>>> 9440fafe7348d0af9a3426c0b416018f06e67e03
+  console.log('check data', newArray);
+  res.send(newArray);
 
   res.send(newArray);
 });
@@ -678,11 +662,11 @@ router.get('/supplier', async (req, res) => {
 });
 
 //delete specific supplier
-router.delete("/supplierDel/:id", async (req, res) => {
+router.delete('/supplierDel/:id', async (req, res) => {
   console.log(req.params.id);
   try {
     const data = await User.deleteOne({ _id: req.params.id });
-    res.json("success");
+    res.json('success');
   } catch (e) {
     res.json({ message: error.message });
   }
@@ -1024,29 +1008,28 @@ router.post('/category/:id', async (req, res) => {
   }
 });
 
-
-
-
 //category edit
-router.patch("/categoryPatch/:id", async (req, res) => {
+router.patch('/categoryPatch/:id', async (req, res) => {
   try {
-    const data = await Category.findOneAndUpdate({ _id: req.params.id }, {category: req.body.catName},
-    {
-      new: true,
-      useFindAndModify: false,
-    },
-    (err, result) => {
-      if (!err) {
-        res.send("success");
-      } else {
-        console.log("error ", err);
+    const data = await Category.findOneAndUpdate(
+      { _id: req.params.id },
+      { category: req.body.catName },
+      {
+        new: true,
+        useFindAndModify: false,
+      },
+      (err, result) => {
+        if (!err) {
+          res.send('success');
+        } else {
+          console.log('error ', err);
+        }
       }
-    });
+    );
   } catch (e) {
     res.json({ message: error.message });
   }
 });
-
 
 //Add Product
 router.post('/addProduct', upload.array('productImage'), async (req, res) => {
