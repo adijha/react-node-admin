@@ -170,10 +170,14 @@ const ProductList = () => {
                         return (
                           <tr key={key}>
                             <td style={{ width: '15%' }}>
-                              <img
-                                className='product-logo'
-                                src={`data:image/jpeg;base64, ${item.productImage[0].imgBufferData}`}
-                              />
+                              {!!item.productImage[0].imgBufferData ? (
+                                <img
+                                  className='product-logo'
+                                  src={`data:image/jpeg;base64, ${item.productImage[0].imgBufferData}`}
+                                />
+                              ) : (
+                                'Image not Available'
+                              )}
                             </td>
                             <td>{item.name}</td>
                             <td>{item.code}</td>
